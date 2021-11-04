@@ -9,7 +9,15 @@
 {% block main_content %}
     {% if request.user.is_authenticated %}
         <div class="container mt-3">
-            <h3 class="alert alert-success text-center">Hi</h3>
+        <div class="row">
+            <p>you can chat with: </p>
+            <ul>
+                {% for user in users %}
+                    <li><a href="{% url 'chat:chat' user.id %}">{{ user }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
         </div>
     {% else %}
         <div class="container mt-3">

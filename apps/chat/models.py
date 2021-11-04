@@ -15,12 +15,12 @@ class PrivateChat(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = (('user1', 'user2'), ('user2', 'user1'))
+        unique_together = [('user1', 'user2'), ('user2', 'user1')]
         verbose_name = 'Private chat'
         verbose_name_plural = 'Private chat rooms'
 
     def __str__(self):
-        return f'chat with: {self.user1_id}, {self.user2_id}'
+        return f'chat with: {self.user1}, {self.user2}'
 
     @staticmethod
     def chat_room_exists(user1: AbstractBaseUser, user2: AbstractBaseUser) -> Optional[Any]:
