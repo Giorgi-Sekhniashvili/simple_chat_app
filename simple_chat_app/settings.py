@@ -30,7 +30,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # 'allauth.socialaccount.providers.google',
 
-    # 'channels',
+    'channels',
+
     'apps.chat'
 ]
 
@@ -63,6 +64,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'simple_chat_app.wsgi.application'
+ASGI_APPLICATION = 'simple_chat_app.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

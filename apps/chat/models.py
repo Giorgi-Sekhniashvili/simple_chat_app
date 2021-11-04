@@ -30,7 +30,8 @@ class PrivateChat(models.Model):
     def create_if_not_exists(user1: AbstractBaseUser, user2: AbstractBaseUser):
         res = PrivateChat.chat_room_exists(user1, user2)
         if not res:
-            PrivateChat.objects.create(user1=user1, user2=user2)
+            private_chat = PrivateChat.objects.create(user1=user1, user2=user2)
+            return private_chat
 
     @staticmethod
     def get_chat_rooms_for_user(user: AbstractBaseUser):
