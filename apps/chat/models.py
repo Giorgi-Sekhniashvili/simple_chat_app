@@ -9,8 +9,8 @@ UserModel: AbstractBaseUser = get_user_model()
 
 
 class PrivateChat(models.Model):
-    user1 = models.ForeignKey(to=UserModel, on_delete=models.CASCADE)
-    user2 = models.ForeignKey(to=UserModel, on_delete=models.CASCADE)
+    user1 = models.ForeignKey(to=UserModel, on_delete=models.CASCADE, related_name='user1')
+    user2 = models.ForeignKey(to=UserModel, on_delete=models.CASCADE, related_name='user2')
 
     created = models.DateTimeField(auto_now_add=True)
 
@@ -47,7 +47,7 @@ class PrivateChatMessage(models.Model):
     modified = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-time_created']
+        ordering = ['-created']
         verbose_name = 'Private chat message'
         verbose_name_plural = 'Private chat messages'
 
