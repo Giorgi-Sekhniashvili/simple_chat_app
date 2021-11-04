@@ -1,0 +1,19 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+{% block title %}
+    chat
+{% endblock %}
+
+{% block main_content %}
+    {% if request.user.is_authenticated %}
+        <div class="container mt-3">
+            <h3 class="alert alert-success text-center">Hi</h3>
+        </div>
+    {% else %}
+        <div class="container mt-3">
+            <h3 class="alert alert-danger text-center">you should login!</h3>
+        </div>
+    {% endif %}
+{% endblock %}
