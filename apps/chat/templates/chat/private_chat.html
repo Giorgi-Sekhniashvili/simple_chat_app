@@ -7,7 +7,19 @@
 {% endblock %}
 
 {% block main_content %}
+
     <div class="container">
-        <h5>hi</h5>
+        {% if request.user.is_authenticated %}
+            {% if request.user == private_chat.user1 or request.user == private_chat.user2 %}
+                <h5>chat with <strong>
+                    {% if request.user == private_chat.user1 %}{{ private_chat.user2 }}{% else %}
+                        {{ private_chat.user1 }}{% endif %}
+                </strong></h5>
+            {% else %}
+                <h5>აქ რა გინდა? </h5>
+            {% endif %}
+        {% else %}
+            <h5>აქ რა გინდა? თან დარეგისტრირებულიც არ ხარ</h5>
+        {% endif %}
     </div>
 {% endblock %}

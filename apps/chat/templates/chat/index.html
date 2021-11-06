@@ -9,15 +9,29 @@
 {% block main_content %}
     {% if request.user.is_authenticated %}
         <div class="container mt-3">
-        <div class="row">
-            <p>you can chat with: </p>
-            <ul>
-                {% for user in users %}
-                    <li><a href="{% url 'chat:chat' user.id %}">{{ user }}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
-
+            <div class="row">
+                <p>you can chat with: </p>
+                <ul>
+                    {% for user in users %}
+                        <li>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <button>{{ user }}</button>
+                                <input name="user1_id" value="{{ request.user.id }}" hidden>
+                                <input name="user2_id" value="{{ user.id }}" hidden>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="row">
+                <p>message history:</p>
+                <ul>
+                    {% for chat in chats %}
+                        <li><a href="{% url 'chat:chat' chat.encoded_chat_name %}"> {% if request.user == chat.user1 %}{{ chat.user2 }}{% else %}{{ chat.user1 }}{% endif %}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     {% else %}
         <div class="container mt-3">
