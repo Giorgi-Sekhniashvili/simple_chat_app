@@ -9,6 +9,8 @@ UserModel: AbstractBaseUser = get_user_model()
 
 
 class PrivateChat(models.Model):
+    encoded_chat_name = models.CharField(max_length=64, unique=True)
+
     user1 = models.ForeignKey(to=UserModel, on_delete=models.CASCADE, related_name='user1')
     user2 = models.ForeignKey(to=UserModel, on_delete=models.CASCADE, related_name='user2')
 
