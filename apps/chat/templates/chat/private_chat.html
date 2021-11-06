@@ -7,10 +7,10 @@
 {% endblock %}
 {% block styles %}
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-    <link href="{% static 'chat/css/chat.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block main_content %}
+    {{ private_chat.encoded_chat_name|json_script:'private_chat' }}
 
     <div class="container">
         <div class="row clearfix">
@@ -21,27 +21,26 @@
                             {% if request.user == private_chat.user1 %}{{ private_chat.user2 }}{% else %}
                                 {{ private_chat.user1 }}{% endif %}:
                         </strong></h5>
-                        {% if messages %}
-                            <div class="card card-body">
+                        <div id="chat">
+                            {% if messages %}
+                                <div class="card card-body">
 
-                                {% for message in messages %}
-                                    <div class="card card-body">
-                                        <h5>{{ message.content }}</h5>
-                                    </div>
-                                {% endfor %}
+                                    {% for message in messages %}
+                                        <div class="card card-body">
+                                            <h5>{{ message.content }}</h5>
+                                        </div>
+                                    {% endfor %}
 
-                            </div>
-                        {% endif %}
-                        <form>
-                            <div class="chat-message clearfix">
-                                <div class="input-group mb-0">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fa fa-send"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Enter text here...">
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="input-group">
+                                    <input class="form-control" type="text" v-model="message" v-on:keydown.enter="submitMessage">
+                                    <button class="btn btn-primary" v-on:click="submitMessage"><i
+                                            class="far fa-paper-plane"></i></button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     {% else %}
                         <h5>აქ რა გინდა? </h5>
                     {% endif %}
@@ -54,5 +53,8 @@
 {% endblock %}
 
 {% block scripts %}
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.min.js"
+            integrity="sha512-B4skI5FiLurS86aioJx9VfozI1wjqrn6aTdJH+YQUmCZum/ZibPBTX55k5d9XM6EsKePDInkLVrN7vPmJxc1qA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{% static 'chat/js/chat.js' %}"></script>
 {% endblock %}

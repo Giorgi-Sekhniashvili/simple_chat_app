@@ -52,8 +52,9 @@ class IndexPageView(View):
 class PrivateChatView(View):
     def get(self, request, chat_name):
         private_chat = PrivateChat.objects.get(encoded_chat_name=chat_name)
+        print(private_chat)
         context = {
             'private_chat': private_chat,
-            'messages': private_chat.privatechatmessage_set
+            'messages': private_chat.privatechatmessage_set.all()
         }
         return render(request, 'chat/private_chat.html', context=context)
