@@ -12,6 +12,7 @@ daphne==3.0.2
 defusedxml==0.7.1
 Django==3.2.9
 django-allauth==0.45.0
+djangorestframework==3.12.4
 hyperlink==21.0.0
 idna==3.3
 incremental==21.3.0

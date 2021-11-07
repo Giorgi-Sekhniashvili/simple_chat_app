@@ -6,8 +6,11 @@ from django.db.models import Q
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.views.generic import View
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import PrivateChat
+from .serializers import PrivateChatMessageSerializer
 
 UserModel: AbstractBaseUser = get_user_model()
 
@@ -58,3 +61,13 @@ class PrivateChatView(View):
             'messages': private_chat.privatechatmessage_set.all()
         }
         return render(request, 'chat/private_chat.html', context=context)
+
+
+class ChatMessagesAPIView(APIView):
+    def get(self, request, chat_name):
+        print(chat_name)
+        chat_room = PrivateChat.objects.get(encoded_chat_name=chat_name)
+        messages = chat_room.privatechatmessage_set.all()
+
+        message_serializer = PrivateChatMessageSerializer(messages, many=True)
+        return Response(data=message_serializer.data)

@@ -10,13 +10,14 @@
 {% endblock %}
 
 {% block main_content %}
-    {{ private_chat.encoded_chat_name|json_script:'private_chat' }}
+
 
     <div class="container">
         <div class="row clearfix">
             <div class="col-lg-12">
                 {% if request.user.is_authenticated %}
                     {% if request.user == private_chat.user1 or request.user == private_chat.user2 %}
+                        {{ private_chat.encoded_chat_name|json_script:'private_chat' }}
                         <h5>chat with <strong>
                             {% if request.user == private_chat.user1 %}{{ private_chat.user2 }}{% else %}
                                 {{ private_chat.user1 }}{% endif %}:
