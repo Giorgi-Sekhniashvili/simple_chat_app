@@ -1,0 +1,6 @@
+#messageCard {
+    max-height: 30rem;
+    overflow-x: auto;
+}
+.card-body .message {
+}

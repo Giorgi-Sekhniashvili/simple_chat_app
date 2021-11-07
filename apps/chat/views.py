@@ -65,9 +65,12 @@ class PrivateChatView(View):
 
 class ChatMessagesAPIView(APIView):
     def get(self, request, chat_name):
-        print(chat_name)
-        chat_room = PrivateChat.objects.get(encoded_chat_name=chat_name)
-        messages = chat_room.privatechatmessage_set.all()
+        if request.user.is_authenticated:
+            chat_room = PrivateChat.objects.get(encoded_chat_name=chat_name)
+            if request.user in [chat_room.user1, chat_room.user2]:
+                messages = chat_room.privatechatmessage_set.order_by('created').all()
 
-        message_serializer = PrivateChatMessageSerializer(messages, many=True)
-        return Response(data=message_serializer.data)
+                message_serializer = PrivateChatMessageSerializer(messages, many=True)
+                return Response(data=message_serializer.data)
+        else:
+            return HttpResponseForbidden()
